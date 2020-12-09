@@ -17,12 +17,13 @@ public class StudentService {
     @Autowired // Spring automatically autowires FakeStudentDaoImpl to this Class
 
     // Specify the qualifier so Spring knows what Class it is serving from.
-    public StudentService(@Qualifier("fakeDao") StudentDao studentDao) {
+    public StudentService(@Qualifier("mongoDbDao") StudentDao studentDao) {
         this.studentDao = studentDao;
     }
 
     public int persistNewStudent(UUID studentId, Student student) {
         UUID studentUid = studentId == null ? UUID.randomUUID() : studentId;
+        student.setId(studentId);
         return studentDao.insertNewStudent(studentUid, student);
 
     }
